@@ -1,6 +1,6 @@
 # docker-protonmail-personal-gateway
 
-The goal of this docker image is to create a simple gateway that will intercept email notifications from appliances and devices that can send alerts over email, encrypt the content of the email and send it to my protonmail acount, using the free gmail SMTP service. It should be fairly simple for you to clone this repo and replace the google SMTP with another provider. 
+The goal of this docker image is to create a simple gateway that will intercept email notifications from appliances and devices that can send alerts over email, encrypt the content of the email and send it to my protonmail account, using the free gmail SMTP service. It should be fairly simple for you to clone this repo and replace the google SMTP with another provider. 
 
 Changes compared to tianon/exim4 and metabrainz/docker-exim:
 
