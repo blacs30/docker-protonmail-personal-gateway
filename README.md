@@ -1,3 +1,5 @@
+[![Docker Build Status](https://img.shields.io/docker/build/facastagnini/docker-protonmail-personal-gateway.svg)](https://hub.docker.com/r/facastagnini/docker-protonmail-personal-gateway/builds/)
+
 # docker-protonmail-personal-gateway
 
 The goal of this docker image is to create a simple gateway that will intercept email notifications from appliances and devices that can send alerts over email, encrypt the content of the email and send it to my protonmail account, using the free gmail SMTP service. It should be fairly simple for you to clone this repo and replace the google SMTP with another provider. 
