@@ -1,4 +1,4 @@
-[![Docker Build Status](https://img.shields.io/docker/build/facastagnini/docker-protonmail-personal-gateway.svg)](https://hub.docker.com/r/facastagnini/docker-protonmail-personal-gateway/builds/)
+[![Docker Build Status](https://img.shields.io/docker/build/blacs30/docker-protonmail-personal-gateway.svg)](https://hub.docker.com/r/blacs30/docker-protonmail-personal-gateway/builds/)
 
 # docker-protonmail-personal-gateway
 
@@ -15,14 +15,17 @@ Changes compared to tianon/exim4 and metabrainz/docker-exim:
 - GMAIL_PASSWORD: the google application password for your account.
 - PROTONMAIL_USER: your protonmail address
 - PROTONMAIL_USER_PUBLIC_KEY: path to your protonmail GPG public key
+- MYNETWORKS: Add additional networks to authorize relaying mails
+
+You can mount the public gpg key with the -v/--volume command when you run docker. Set the mount location to the variable PROTONMAIL_USER_PUBLIC_KEY, it will get imported on start.
 
 After getting a google application password, you may use something like:
 
 ```
-docker run --detach --publish 12025:25 --env GMAIL_USER=youruser@yourdomain.com --env GMAIL_PASSWORD=yourpasswordhere --env PROTONMAIL_USER=youruser@protonmail.com --env PROTONMAIL_USER_PUBLIC_KEY=/home/user/youruser.key --name eximtest facastagnini/docker-protonmail-personal-gateway
+docker run --detach --volume ~/Desktop/publickey.youruser@protonmail.com.asc:/tmp/gpgkey.pub --publish 12025:25 --env GMAIL_USER=youruser@yourdomain.com --env GMAIL_PASSWORD=yourapppasswordhere --env PROTONMAIL_USER=youruser@protonmail.com --env PROTONMAIL_USER_PUBLIC_KEY=/tmp/gpgkey.pub --env MYNETWORKS='192.168.5.0/24;192.168.5.0/24' --name pmgate blacs30/docker-protonmail-personal-gateway
 ```
 
-Images are available at https://hub.docker.com/r/facastagnini/docker-protonmail-personal-gateway
+Images are available at https://hub.docker.com/r/blacs30/docker-protonmail-personal-gateway
 
 ## How to get my protonmail public key?
 See https://protonmail.com/support/knowledge-base/download-public-key/
