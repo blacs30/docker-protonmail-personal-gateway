@@ -25,7 +25,9 @@ if [ "$GMAIL_USER" -a "$GMAIL_PASSWORD" ]; then
     dc_smarthost 'smtp.gmail.com::587'
   )
   echo "*.google.com:$GMAIL_USER:$GMAIL_PASSWORD" > /etc/exim4/passwd.client
-  sed -i "/^remote_smtp_smarthost:/a      transport_filter = /usr/local/bin/gpgit.pl ${PROTONMAIL_USER}" /etc/exim4/exim4.conf.template
+  if ! grep 'gpgit.pl' /etc/exim4/exim4.conf.template; then
+    sed -i "/^remote_smtp_smarthost:/a      transport_filter = /usr/local/bin/gpgit.pl ${PROTONMAIL_USER}" /etc/exim4/exim4.conf.template
+  fi
 else
   opts+=(
     dc_eximconfig_configtype 'internet'
