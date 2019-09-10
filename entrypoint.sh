@@ -2,7 +2,7 @@
 # based on https://github.com/metabrainz/docker-exim/blob/master/entrypoint.sh
 set -e
 
-echo "$HOSTNAME" > /etc/mailname
+# echo "$HOSTNAME" > /etc/mailname
 
 if [[ -n $MYNETWORKS ]]; then
 opts=(
@@ -19,6 +19,9 @@ opts=(
 fi
 
 if [ "$GMAIL_USER" -a "$GMAIL_PASSWORD" ]; then
+    if [ -n "$PASS_FILE" ]; then
+        GMAIL_PASSWORD=$(cat $PASS_FILE)
+    fi
   # see https://wiki.debian.org/GmailAndExim4
   opts+=(
     dc_eximconfig_configtype 'smarthost'
