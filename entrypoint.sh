@@ -9,12 +9,14 @@ opts=(
   dc_local_interfaces '0.0.0.0 ; ::0'
   dc_other_hostnames ''
   dc_relay_nets "$(ip addr show dev eth0 | awk '$1 == "inet" { print $2 }');${MYNETWORKS}"
+  ignore_smtp_line_length_limit '1'
 )
 else
 opts=(
   dc_local_interfaces '0.0.0.0 ; ::0'
   dc_other_hostnames ''
   dc_relay_nets "$(ip addr show dev eth0 | awk '$1 == "inet" { print $2 }')"
+  ignore_smtp_line_length_limit '1'
 )
 fi
 
