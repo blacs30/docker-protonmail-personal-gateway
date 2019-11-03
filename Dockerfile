@@ -3,17 +3,19 @@
 
 FROM debian:stable-slim
 MAINTAINER Claas Lisowski <https://github.com/blacs30/docker-protonmail-personal-gateway>
-
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
 # grab tini for signal processing and zombie killing
 ENV TINI_VERSION v0.16.1
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/local/bin/tini
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc /usr/local/bin/tini.asc
-RUN apt-get update && apt-get install -y iproute2 net-tools gpg && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y iproute2 net-tools gpg curl && rm -rf /var/lib/apt/lists/*
 RUN set -x \
+ && mkdir -p  /usr/local/bin/ \
+  && curl -L https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-$(echo "$TARGETPLATFORM" | sed 's|linux/||g')  -o /usr/local/bin/tini \
+  && curl -L https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-$(echo "$TARGETPLATFORM" | sed 's|linux/||g').asc -o /usr/local/bin/tini.asc \
  && gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 \
  && gpg --verify /usr/local/bin/tini.asc \
  && chmod +x /usr/local/bin/tini \
- && tini -h
+  && /usr/local/bin/tini -h
 
 RUN set -x && apt-get update && apt-get install -y exim4-daemon-light && rm -rf /var/lib/apt/lists/*
 
@@ -29,4 +31,4 @@ RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/set-exim4-update-conf /
 ENTRYPOINT ["entrypoint.sh"]
 
 EXPOSE 25
-CMD ["tini", "--", "exim", "-bdf", "-v", "-q30m"]
+CMD ["/usr/local/bin/tini", "--", "exim", "-bdf", "-v", "-q30m"]
