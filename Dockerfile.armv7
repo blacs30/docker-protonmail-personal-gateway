@@ -1,7 +1,7 @@
 # based on https://hub.docker.com/r/itherz/exim4/~/dockerfile/
 # based on https://github.com/tianon/dockerfiles/blob/master/exim4/Dockerfile
 
-FROM debian:stable-slim
+FROM debian:stable-slim@sha256:56541ab0530325fc003103ceff99994840b84ed4a8a6f6e2f2b3e9c9fa1dbe03
 MAINTAINER Claas Lisowski <https://github.com/blacs30/docker-protonmail-personal-gateway>
 ARG TARGETPLATFORM
 # grab tini for signal processing and zombie killing
